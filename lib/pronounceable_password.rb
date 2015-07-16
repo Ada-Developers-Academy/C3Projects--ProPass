@@ -9,6 +9,7 @@ class PronounceablePassword
     @probability_corpus = probability_corpus
   end
 
+  # 
   def read_probabilities
     # Should consume the provided CSV file into a structure that
     # can be used to identify the most probably next letter
@@ -40,10 +41,12 @@ class PronounceablePassword
     map_next_letters[letter]
   end
   
+  # !!!! do sort bit !!!
   # returns Array (of strings)
   # elements are letters that can follow the input letter
   def possible_next_letters(letter)
-    # Should return an array of possible next letters sorted
+    # Should return an array of hash objects of which the second letter of the key is
+    # possible next letters sorted
     # by likelyhood in a descending order
     # eg. put in a, get [b, e, d, t]
     # pair_score_hash = map_next_letters[letter]
@@ -64,6 +67,7 @@ class PronounceablePassword
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
-    # the sample limit as the lower bounds of a substring 
+    # the sample limit as the lower bounds of a substring
+
   end
 end
