@@ -1,9 +1,10 @@
 require 'csv'
+require 'pry'
 
 class PronounceablePassword
 
   def initialize(probability_corpus)
-    # probability corpus is the file location of the CSV with the 
+    # probability corpus is the file location of the CSV with the
     # pre-calculated letter probability pairs
     @probability_corpus = probability_corpus
   end
@@ -11,7 +12,16 @@ class PronounceablePassword
   def read_probabilities
     # Should consume the provided CSV file into a structure that
     # can be used to identify the most probably next letter
+    hash = {}
+
+    CSV.foreach(@probability_corpus, headers: true) do |row|
+      hash[row[0]] = row[1].to_i
+    end
+    return hash
   end
+
+  binding.pry
+
 
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
@@ -24,6 +34,6 @@ class PronounceablePassword
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
-    # the sample limit as the lower bounds of a substring 
+    # the sample limit as the lower bounds of a substring
   end
 end
