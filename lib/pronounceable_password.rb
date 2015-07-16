@@ -2,10 +2,10 @@ require 'csv'
 
 class PronounceablePassword
 
-  def initialize(probability_corpus)
-    # probability corpus is the file location of the CSV with the 
+  def initialize(csv_location)
+    # probability corpus is the file location of the CSV with the
     # pre-calculated letter probability pairs
-    @probability_corpus = probability_corpus
+    @csv_location = csv_location
   end
 
   def read_probabilities
