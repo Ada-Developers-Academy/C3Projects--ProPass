@@ -1,3 +1,5 @@
+Shanna Chau
+
 ### What is a Pronounceable Password
 
 A passphrase that you can communicate and more likely remember because it follows some of the rules of a real word
