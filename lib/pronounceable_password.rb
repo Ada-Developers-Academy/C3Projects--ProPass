@@ -20,6 +20,11 @@ class PronounceablePassword
     corpus
   end
 
+  # returns Hash (of hashes)
+  # key is letter (string)
+  # value is hash
+  # => key is letter pair
+  # => value is score
   def map_next_letters
     corpus = read_probabilities
     corpus.group_by do |hash|
@@ -27,18 +32,34 @@ class PronounceablePassword
     end
   end
 
+  # returns Array (of hashes)
+  # in each hash, 
+  # => key is pair string
+  # => value is score
+  def pair_score_hash(letter)
+    map_next_letters[letter]
+  end
+  
+  # returns Array (of strings)
+  # elements are letters that can follow the input letter
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
     # eg. put in a, get [b, e, d, t]
-    letter_hash = map_next_letters[letter]
-    letter_hash.collect do |pair_score_tuple|
+    # pair_score_hash = map_next_letters[letter]
+    pair_score_hash(letter).collect do |pair_score_tuple|
       pair_score_tuple.keys.first.chars.last
     end
   end
 
+  # want to return single most common next letter
   def most_common_next_letter(letter)
     # The most probable next letter
+    
+    max_tuple = pair_score_hash(letter).max_by do |pair_score_tuple|
+      pair_score_tuple.values.first.to_i
+    end
+    max_tuple.keys.first.chars.last
   end
 
   def common_next_letter(letter, sample_limit = 2)
