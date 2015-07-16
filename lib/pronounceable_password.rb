@@ -3,27 +3,27 @@ require 'csv'
 class PronounceablePassword
 
   def initialize(csv_location)
-    # probability corpus is the file location of the CSV with the
-    # pre-calculated letter probability pairs
     @csv_location = csv_location
   end
 
   def read_probabilities
-    # Should consume the provided CSV file into a structure that
-    # can be used to identify the most probably next letter
+    @database = []
+    CSV.foreach(@csv_location, headers: true, header_converters: :symbol) do |row|
+      @database << { row[:letter_pair] => row[:count].to_i }
+    end
+
+    @database.sort_by! { |hash| hash.values }.reverse!
   end
 
   def possible_next_letters(letter)
-    # Should return an array of possible next letters sorted
-    # by likelyhood in a descending order
+    @database.select{ |hash| hash.keys.first.chars.first == letter }.map{ |hash| hash.keys.first.chars.last }
   end
 
   def most_common_next_letter(letter)
-    # The most probable next letter
+    possible_next_letters(letter).first
   end
 
   def common_next_letter(letter, sample_limit = 2)
-    # Randomly select a common letter within a range defined by
-    # the sample limit as the lower bounds of a substring
+    possible_next_letters(letter)[0, sample_limit].sample
   end
 end
