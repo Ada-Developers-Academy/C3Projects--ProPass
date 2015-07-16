@@ -24,6 +24,6 @@ class PronounceablePassword
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
-    # the sample limit as the lower bounds of a substring 
+    # the sample limit as the lower bounds of a substring
   end
 end
