@@ -15,7 +15,8 @@ class PronounceablePassword
 
     hash_form = {}
 
-    # !W remove the header row later if time.
+    # !W remove the header row later.
+    # update: I cheated and deleted it from the CSV.
     array_form = CSV.read(@probability_corpus)
 
     array_form.each { |row|

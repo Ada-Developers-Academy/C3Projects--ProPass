@@ -15,7 +15,7 @@ beginning_time = Time.now
   puts most_common_pronouncable_password.join
 end_time = Time.now
 
-puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds"
+puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds.\n\n"
 
 
 # more random version of above
@@ -27,7 +27,7 @@ beginning_time = Time.now
   puts common_pronouncable_password.join
 end_time = Time.now
 
-puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds"
+puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds.\n\n"
 
 
 # without the while loop
@@ -39,7 +39,7 @@ beginning_time = Time.now
   puts common_pronouncable_password.join
 end_time = Time.now
 
-puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds"
+puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds.\n\n"
 
 
 pass_length = 30
@@ -54,7 +54,7 @@ beginning_time = Time.now
   puts common_pronouncable_password.join
 end_time = Time.now
 
-puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds"
+puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds.\n\n"
 
 
 # without the while loop with more length & slightly more sample size
@@ -65,7 +65,7 @@ beginning_time = Time.now
   end
   puts common_pronouncable_password.join
 end_time = Time.now
-puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds"
+puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds.\n\n"
 
 
 # without the while loop with more length & even more sample size
@@ -76,4 +76,4 @@ beginning_time = Time.now
   end
   puts common_pronouncable_password.join
 end_time = Time.now
-puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds"
+puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds.\n\n"
