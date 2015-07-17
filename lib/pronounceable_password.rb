@@ -49,11 +49,14 @@ class PronounceablePassword
     # Within the sorted array, find the most common letter_pair, amd return the second letter
   end
 
-  def common_next_letter(letter, sample_limit = 5) # or just sample_limit??
+  def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
-    random_choices = self.possible_next_letters(letter)
-    random_choices.sample(sample_limit)
+
+    sorted_array = self.possible_next_letters(letter)
+    # get an array of all possible next letters, and from that subset get a random one within the
+    # range of the sample limit
+    sorted_array.max(sample_limit).sample[0].chars.last
   end
 
 end
