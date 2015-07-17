@@ -13,9 +13,13 @@ class PronounceablePassword
     sort_subsets!
   end
 
-  def read_probabilities
-    # Should consume the provided CSV file into a structure that
-    # can be used to identify the most probably next letter
+  def build_password_from(letter, password_length = 10)
+    password = letter.dup # we don't want to mutate letter
+    (password_length - 1).times do |index|
+      password << common_next_letter(password[index])
+    end
+
+    password
   end
 
   def possible_next_letters(letter)

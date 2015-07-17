@@ -18,3 +18,6 @@ while common_pronouncable_password.length < pass_length do
   common_pronouncable_password << pronounce.common_next_letter(common_pronouncable_password.last)
 end
 puts common_pronouncable_password.join
+
+# more random using instance method
+puts pronounce.build_password_from(starting_letter, pass_length)
