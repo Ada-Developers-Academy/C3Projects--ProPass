@@ -31,8 +31,9 @@ class PronounceablePassword
   def possible_next_letters(letter)
 
     matches = @probs.select {|key, value| key.include?(letter)}
-    sorted = matches.sort_by {|sound, probbles| probbles }.reverse
-    return sorted
+    sorted_array = matches.sort_by {|sound, probbles| probbles }.reverse
+    tuple_version = sorted_array.collect {|sound, probbles| {sound => probbles}}
+    return tuple_version
 
     # Should return an array of possible next letters sorted
     # by likelihood in a descending order
@@ -40,13 +41,24 @@ class PronounceablePassword
 
   def most_common_next_letter(letter)
 
-    sorted = possible_next_letters(letter)
-    next_letter = sorted[0][0][1]
-    return
+    tuple_version = possible_next_letters(letter)
+    most_common_sound = tuple_version.first.keys
+    second_letter = most_common_sound[0][1]
+    return second_letter
     # The most probable next letter
   end
 
   def common_next_letter(letter, sample_limit = 2)
+
+    common_letters = []
+
+    sample_limit.times do |index|
+      that_one = most_common_next_letter(letter)
+      common_letters.push(that_one)
+    end
+
+    return common_letters
+
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
   end
