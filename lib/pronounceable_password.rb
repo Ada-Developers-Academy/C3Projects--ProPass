@@ -1,4 +1,5 @@
 require 'csv'
+require 'pry'
 
 class PronounceablePassword
 
@@ -11,6 +12,11 @@ class PronounceablePassword
   def read_probabilities
     # Should consume the provided CSV file into a structure that
     # can be used to identify the most probably next letter
+    @probabilities = []
+    CSV.foreach(@probability_corpus, headers: true) do |row|
+     @probabilities << { row['letter pair'] => row['count'].to_i }
+    end
+    print @probabilities
   end
 
   def possible_next_letters(letter)
