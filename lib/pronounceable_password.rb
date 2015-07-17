@@ -14,15 +14,17 @@ class PronounceablePassword
     # can be used to identify the most probably next letter
     @probabilities = []
     CSV.foreach(@probability_corpus, headers: true) do |row|
-     @probabilities << { row['letter pair'] => row['count'].to_i }
+     @probabilities << { row[0] => row[1].to_i }
     end
-    print @probabilities
   end
 
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
-    # by likelyhood in a descending order
+    # by likelihood in a descending order
+    @probabilities.select { |key, value| key.include?(letter) }
+
   end
+  binding.pry
 
   def most_common_next_letter(letter)
     # The most probable next letter
