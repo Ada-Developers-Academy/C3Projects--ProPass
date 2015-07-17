@@ -1,5 +1,5 @@
 require_relative './lib/pronounceable_password'
-pronounce = PronounceablePassword.new('./data/probability.csv')
+pronounce = PronounceablePassword_One.new('./data/probability.csv')
 pronounce.read_probabilities
 pass_length = 10
 starting_letter = %w(a b c d e f g h i j k l m n o p q r s t u v w x y z).sample
