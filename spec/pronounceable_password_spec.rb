@@ -11,9 +11,15 @@ describe 'Pronounceable Passwords' do
 
   it 'will load the probability corpus csv' do
     probabilities = @pronounce.read_probabilities
-    expect(probabilities['aa']).to equal 1
-    expect(probabilities['kb']).to equal nil
-    expect(probabilities['za']).to equal 26
+    pairs = {'aa' => 1, 'kb' => nil, 'za' => 26}
+    binding.pry
+    pairs.each do |key, value|
+      expect(probabilities.first[key]).to eq value
+    end
+
+    # expect(probabilities['aa']).to equal 1
+    # expect(probabilities['kb']).to equal nil
+    # expect(probabilities['za']).to equal 26
   end
 
   it 'will pick the next most common letters' do
