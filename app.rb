@@ -45,7 +45,7 @@ puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } millisec
 pass_length = 30
 
 
-# slightly more random
+# while loop is back with more length & slightly more sample size
 beginning_time = Time.now
   common_pronouncable_password = [starting_letter]
   while common_pronouncable_password.length < pass_length do
@@ -57,7 +57,7 @@ end_time = Time.now
 puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds"
 
 
-# without the while loop + slightly more random
+# without the while loop with more length & slightly more sample size
 beginning_time = Time.now
   common_pronouncable_password = [starting_letter]
   (pass_length - 1).times do
@@ -68,7 +68,7 @@ end_time = Time.now
 puts "Time elapsed #{ (( end_time - beginning_time ) * 1000).round(2) } milliseconds"
 
 
-# even more sample size
+# without the while loop with more length & even more sample size
 beginning_time = Time.now
   common_pronouncable_password = [starting_letter]
   (pass_length - 1).times do
