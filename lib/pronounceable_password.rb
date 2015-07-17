@@ -34,14 +34,16 @@ class PronounceablePassword
   end
 
   # returns Array (of hashes)
+  # hashes are sorted descending by score
   # in each hash, 
   # => key is pair string
   # => value is score
   def pair_score_hash(letter)
-    map_next_letters[letter]
+    map_next_letters[letter].sort do |hash1, hash2| 
+      hash2.values.first.to_i <=> hash1.values.first.to_i
+    end
   end
-  
-  # !!!! do sort bit !!!
+
   # returns Array (of strings)
   # elements are letters that can follow the input letter
   def possible_next_letters(letter)
@@ -58,14 +60,17 @@ class PronounceablePassword
   # want to return single most common next letter
   def most_common_next_letter(letter)
     # The most probable next letter
+    possible_next_letters(letter).first
     
-    max_tuple = pair_score_hash(letter).max_by do |pair_score_tuple|
-      pair_score_tuple.values.first.to_i
-    end
-    max_tuple.keys.first.chars.last
+    # max_tuple = pair_score_hash(letter).max_by do |pair_score_tuple|
+    #   pair_score_tuple.values.first.to_i
+    # end
+    # max_tuple.keys.first.chars.last
   end
 
   def common_next_letter(letter, sample_limit = 2)
+    restricted_letter_set = possible_next_letters(letter)[0...sample_limit]
+    restricted_letter_set.sample
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
 
