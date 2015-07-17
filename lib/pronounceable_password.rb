@@ -82,16 +82,3 @@ class PronounceablePassword
     # the sample limit as the lower bounds of a substring
   end
 end
-
-# old common_next_letter
-# sample_limit.times do |index|
-#   tuple_version = possible_next_letters(letter)
-#   puts tuple_version
-#   most_common_sounds = tuple_version[index].keys
-#   puts most_common_sounds
-#   a_common_letter = most_common_sounds[0][1]
-#   puts a_common_letter
-#   common_letters.push(a_common_letter)
-#
-#   puts common_letters
-# end
