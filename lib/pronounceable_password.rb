@@ -35,10 +35,11 @@ class PronounceablePassword
     return sorted_array[0][0][1]
   end
 
-  def common_next_letter(letter, sample_limit)
+  def common_next_letter(letter, sample_limit=2)
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
-    choices = self.possible_next_letters(letter).sample(sample_limit)
-    return choices
+    choices = self.possible_next_letters(letter).first(sample_limit).sample
+    letter = choices[0][1]
+    return letter
   end
 end
