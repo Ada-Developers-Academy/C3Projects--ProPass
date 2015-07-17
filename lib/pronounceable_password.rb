@@ -53,11 +53,11 @@ class PronounceablePassword
     common_letters = []
 
     sample_limit.times do |index|
-      that_one = most_common_next_letter(letter)
-      common_letters.push(that_one)
+      tuple_version = possible_next_letters(letter)
+      most_common_sounds = tuple_version[index].keys
+      that_letter = most_common_sounds[0][1]
+      return that_letter
     end
-
-    return common_letters
 
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
