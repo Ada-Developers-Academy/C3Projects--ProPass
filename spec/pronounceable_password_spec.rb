@@ -29,4 +29,5 @@ describe 'Pronounceable Passwords' do
   it 'will pick the next best letter from a subset of the most common options' do
     expect(@pronounce.common_next_letter('z')).to be_one_of(['a','b'])
   end
+
 end

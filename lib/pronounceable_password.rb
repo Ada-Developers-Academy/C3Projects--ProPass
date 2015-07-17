@@ -2,14 +2,14 @@ require 'csv'
 require 'pry'
 
 class PronounceablePassword
-  attr_writer :probs
+  attr_accessor :probs
 
 
   def initialize(probability_corpus)
     # probability corpus is the file location of the CSV with the
     # pre-calculated letter probability pairs
     @probability_corpus = probability_corpus
-    @probs = "no_probs"
+    @probs = {}
   end
 
   def read_probabilities
@@ -30,8 +30,8 @@ class PronounceablePassword
 
   def possible_next_letters(letter)
 
-    matches = @probs.select {|key, value| key.include?(letter)}
-    sorted_array = matches.sort_by {|sound, probbles| probbles }.reverse
+    all_matches = @probs.select {|key, value| key[0].include?(letter)}
+    sorted_array = all_matches.sort_by {|sound, probbles| probbles }.reverse
     tuple_version = sorted_array.collect {|sound, probbles| {sound => probbles}}
     return tuple_version
 
@@ -52,14 +52,46 @@ class PronounceablePassword
 
     common_letters = []
 
-    sample_limit.times do |index|
-      tuple_version = possible_next_letters(letter)
-      most_common_sounds = tuple_version[index].keys
-      that_letter = most_common_sounds[0][1]
-      return that_letter
+    tuple_version = possible_next_letters(letter)
+      # [{sound => number}, {sound => number},... ]
+    most_common_sounds = tuple_version.first(sample_limit)
+      # limits that giant array to just two (or whatever limit)
+    index = 0
+      # just a counter
+
+    most_common_sounds.length.times do
+      a_sound = most_common_sounds[index].keys
+      # ["oy"]
+      a_sound_string = a_sound.first
+      # "oy"
+      just_the_second_letter = a_sound_string[1]
+      # "y"
+      common_letters.push(just_the_second_letter)
+
+      index += 1
     end
+
+    # ___ DEBUGGING CHECKS ___
+    # puts "most common sounds is #{most_common_sounds}"
+    # puts "index is #{index}"
+    # puts "common_letters is #{common_letters}"
+    rando_letter = common_letters.sample
+    return rando_letter
 
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
   end
 end
+
+# old common_next_letter
+# sample_limit.times do |index|
+#   tuple_version = possible_next_letters(letter)
+#   puts tuple_version
+#   most_common_sounds = tuple_version[index].keys
+#   puts most_common_sounds
+#   a_common_letter = most_common_sounds[0][1]
+#   puts a_common_letter
+#   common_letters.push(a_common_letter)
+#
+#   puts common_letters
+# end
