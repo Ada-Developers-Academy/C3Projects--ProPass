@@ -9,14 +9,23 @@ class PronounceablePassword
     @probability_corpus = probability_corpus
   end
 
-  # 
+  # def read_probabilities
+  #   # Should consume the provided CSV file into a structure that
+  #   # can be used to identify the most probably next letter
+  #   corpus = []
+  #   CSV.foreach(self.probability_corpus, encoding: "UTF-8", headers: true ) do |row|
+  #     row_hash = {row[0] => row[1]}
+  #     corpus << row_hash
+  #   end
+  #   corpus
+  # end
+
   def read_probabilities
     # Should consume the provided CSV file into a structure that
     # can be used to identify the most probably next letter
-    corpus = []
+    corpus = {}
     CSV.foreach(self.probability_corpus, encoding: "UTF-8", headers: true ) do |row|
-      row_hash = {row[0] => row[1]}
-      corpus << row_hash
+      corpus[row[0]] = row[1].to_i
     end
     corpus
   end
@@ -26,10 +35,17 @@ class PronounceablePassword
   # value is hash
   # => key is letter pair
   # => value is score
+  # def map_next_letters
+  #   corpus = read_probabilities
+  #   corpus.group_by do |hash|
+  #     hash.keys.first.chars.first
+  #   end
+  # end
+
   def map_next_letters
     corpus = read_probabilities
-    corpus.group_by do |hash|
-      hash.keys.first.chars.first
+    corpus.group_by do |k, v|
+      k.chars.first
     end
   end
 
@@ -38,22 +54,38 @@ class PronounceablePassword
   # in each hash, 
   # => key is pair string
   # => value is score
-  def pair_score_hash(letter)
-    map_next_letters[letter].sort do |hash1, hash2| 
-      hash2.values.first.to_i <=> hash1.values.first.to_i
+  # def pair_score_hash(letter)
+  #   map_next_letters[letter].sort do |hash1, hash2| 
+  #     hash2.values.first.to_i <=> hash1.values.first.to_i
+  #   end
+  # end
+  def sorted_letter_pair_score_tuples(letter)
+    map_next_letters[letter].sort do |array1, array2| 
+      array2.last <=> array1.last
     end
   end
 
   # returns Array (of strings)
   # elements are letters that can follow the input letter
+  # def possible_next_letters(letter)
+  #   # Should return an array of hash objects of which the second letter of the key is
+  #   # possible next letters sorted
+  #   # by likelyhood in a descending order
+  #   # eg. put in a, get [b, e, d, t]
+  #   # pair_score_hash = map_next_letters[letter]
+  #   pair_score_hash(letter).collect do |pair_score_tuple|
+  #     pair_score_tuple.keys.first.chars.last
+  #   end
+  # end
+
   def possible_next_letters(letter)
     # Should return an array of hash objects of which the second letter of the key is
     # possible next letters sorted
     # by likelyhood in a descending order
     # eg. put in a, get [b, e, d, t]
     # pair_score_hash = map_next_letters[letter]
-    pair_score_hash(letter).collect do |pair_score_tuple|
-      pair_score_tuple.keys.first.chars.last
+    sorted_letter_pair_score_tuples(letter).collect do |pair_score_tuple|
+      pair_score_tuple.first.chars.last
     end
   end
 
