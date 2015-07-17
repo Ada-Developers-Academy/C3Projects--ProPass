@@ -17,3 +17,25 @@ while common_pronouncable_password.length < pass_length do
   common_pronouncable_password << pronounce.common_next_letter(common_pronouncable_password.last)
 end
 puts common_pronouncable_password.join
+
+# more betterererer version b/c reasonable length & slightly more random
+pass_length = 30
+common_pronouncable_password = [starting_letter]
+while common_pronouncable_password.length < pass_length do
+  common_pronouncable_password << pronounce.common_next_letter(common_pronouncable_password.last,5)
+end
+puts common_pronouncable_password.join
+
+# without the while loop
+common_pronouncable_password = [starting_letter]
+(pass_length - 1).times do # (-1 b/c we have a starting letter)
+  common_pronouncable_password << pronounce.common_next_letter(common_pronouncable_password.last,5)
+end
+puts common_pronouncable_password.join
+
+# even more sample size
+common_pronouncable_password = [starting_letter]
+(pass_length - 1).times do # (-1 b/c we have a starting letter)
+  common_pronouncable_password << pronounce.common_next_letter(common_pronouncable_password.last,20)
+end
+puts common_pronouncable_password.join

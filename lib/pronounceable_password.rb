@@ -31,7 +31,6 @@ class PronounceablePassword
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
 
-    # expect(@pronounce.possible_next_letters('z')).to eql [{"za"=>26}, {"zb"=>10}]
     letter_values = probabilities.select { |key, value| key[0] == letter }
     ascending_array = letter_values.sort_by { |key, value| value }
     descending_array = ascending_array.reverse
@@ -48,15 +47,13 @@ class PronounceablePassword
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
     responses = possible_next_letters(letter)
+
     letters = responses.map{ |hash| hash.keys.pop[1] }
 
-    last = sample_limit - 1
-    return_value = ""
-
-    sample_limit.times do |count|
-      count == last ? return_value = letters.pop : letters.pop
+    if letters.length <= sample_limit
+      return letters.sample
+    else
+      return letters[(0...sample_limit).to_a.sample]
     end
-
-    return return_value
   end
 end
