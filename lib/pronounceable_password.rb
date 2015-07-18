@@ -1,5 +1,4 @@
 require 'csv'
-require 'pry'
 
 class PronounceablePassword
 
