@@ -23,6 +23,7 @@ class PronounceablePassword
 
     # "rows" now is an array with hashes
     # ex. [{"'h"=>"2"}, {"ho"=>"2307"}, {"oo"=>"1310"}, {"od"=>"1219"}]
+    ### OLD CODE:
     # return rows
 
     return combine_array_into_single_hash(rows)
@@ -33,10 +34,22 @@ class PronounceablePassword
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order.
 
-    rows = read_probabilities
-    possibilities_from_letter = rows.select { |row| row.first[0][0] == letter }
-    letters_sorted_by_possibility =
-      possibilities_from_letter.sort_by { |row| row.first[1] }.reverse
+    ### OLD CODE:
+    # rows = read_probabilities
+    # possibilities_from_letter = rows.select { |row| row.first[0][0] == letter }
+    # letters_sorted_by_possibility =
+    #   possibilities_from_letter.sort_by { |row| row.first[1] }.reverse
+
+    rows = read_probabilities # {"aa"=>1, "ba"=>2, "ca"=>3, "da"=>4}
+    possibilities_from_letter = rows.select { |key| key[0] == letter }
+    letters_sorted_by_possibility = []
+    possibilities_from_letter.each do |value, key|
+      hash = {}
+      hash[value] = key
+      letters_sorted_by_possibility << hash
+    end
+
+    return letters_sorted_by_possibility
     # returns ex. [{"za"=>26}, {"zb"=>10}]
   end
 
