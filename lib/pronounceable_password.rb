@@ -40,10 +40,15 @@ class PronounceablePassword
 
   def most_common_next_letter(letter)
     # The most probable next letter.
+
+    possible_next_letters(letter).first.keys.first[1]
+      # first in array, keys in hash, first (and only) value, and second character
   end
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
-    # the sample limit as the lower bounds of a substring
+    # the sample limit as the lower bounds of a substring.
+
+    
   end
 end
