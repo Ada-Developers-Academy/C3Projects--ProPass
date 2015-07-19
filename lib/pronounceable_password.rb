@@ -17,7 +17,7 @@ class PronounceablePassword
     csv_object = CSV.read(@probability_corpus)
     csv_object.shift # to move past the header of the CSV file
     csv_object.each do |row|
-      the_row = { row[0] => row[1] }
+      the_row = { row[0] => row[1].to_i }
       rows << the_row
     end
 
@@ -33,13 +33,13 @@ class PronounceablePassword
     rows = read_probabilities
     possibilities_from_letter = rows.select { |row| row.first[0][0] == letter }
     letters_sorted_by_possibility =
-      possibilities_from_letter.sort_by { |row| row.first[1].to_i }.reverse
+      possibilities_from_letter.sort_by { |row| row.first[1] }.reverse
 
     return letters_sorted_by_possibility
   end
 
   def most_common_next_letter(letter)
-    # The most probable next letter
+    # The most probable next letter.
   end
 
   def common_next_letter(letter, sample_limit = 2)
