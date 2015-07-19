@@ -47,7 +47,7 @@ class PronounceablePassword
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
-    # @combos.pluck.limit(1) - that are still near the front?????
-    possible_next_letters(letter)
+    letter = possible_next_letters(letter)[0...sample_limit].sample
+    letter[0].chars.last
   end
 end
