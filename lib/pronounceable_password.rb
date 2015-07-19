@@ -2,13 +2,13 @@ require 'csv'
 require 'pry'
 
 class PronounceablePassword
-  attr_accessor :probs
+  attr_accessor :odds
 
   def initialize(odds_collection)
     # odds_collection is the file location of the CSV with the
     # pre-calculated letter probability pairs
     @odds_collection = odds_collection
-    @probs = {}
+    @odds = {}
   end
 
   def read_probabilities
@@ -21,7 +21,7 @@ class PronounceablePassword
     hash_fulla_sounds_and_nums[blurp[0]] = blurp[1].to_i
     end
 
-    @probs = hash_fulla_sounds_and_nums
+    @odds = hash_fulla_sounds_and_nums
     # Should consume the provided CSV file into a structure that
     # can be used to identify the most probably next letter
 
@@ -29,7 +29,7 @@ class PronounceablePassword
 
   def possible_next_letters(letter)
 
-    all_matches = @probs.select {|key, value| key[0].include?(letter)}
+    all_matches = @odds.select {|key, value| key[0].include?(letter)}
     sorted_array = all_matches.sort_by {|sound, probbles| probbles }.reverse
     tuple_version = sorted_array.collect {|sound, probbles| {sound => probbles}}
     return tuple_version
