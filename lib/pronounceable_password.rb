@@ -2,6 +2,7 @@ require 'csv'
 require "pry"
 
 class PronounceablePassword
+  attr_accessor :dictionary, :sorted
 
   def initialize(probability_corpus)
     # probability corpus is the file location of the CSV with the
@@ -17,26 +18,24 @@ class PronounceablePassword
     @probabilities.each do |row|
       @dictionary[row[0]] = row[1].to_i
     end
-    sort
+
+    @dictionary
   end
 
   def sort
-    @sorted = @dictionary.sort_by { |key, value| value }.reverse!
     # sorted is arrays within an array
     # [["za", 26], ["ya", 25]...["zb", 10]]
-    print @sorted
-    binding.pry
   end
 
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
-
-
+    # sort
+    @sorted = @dictionary.sort_by { |key, value| value }.reverse!
     @sorted.each do |pair| # ["za", 26]
-    possibilites = []
       if pair[0].chars.first == letter
-        possibilites << pair
+    possibilities = []
+        possibilities.push(pair)
       end
     end
     puts "possibilities:"
