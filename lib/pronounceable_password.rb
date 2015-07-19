@@ -34,7 +34,7 @@ class PronounceablePassword
       select_letter_combos.sort_by { |key, value| value }
         # returns ex. [["az", 2], ["aa", 4], ["ab", 100]]
     sorted_select_letter_combos.reverse!
-      # returns ex. [["ab", 100], ["aa", 4], ["az", 2]]
+        # returns ex. [["ab", 100], ["aa", 4], ["az", 2]]
 
     return reformat_array_of_arrays_to_hash(sorted_select_letter_combos)
     # returns {"ab"=>100, "aa"=>4, "az"=>2}
@@ -63,6 +63,23 @@ class PronounceablePassword
 
     return possible_letters.sample # randomly selects an element!
     # return 'a'
+  end
+
+  def most_common_pronouncable_password(starting_letter, pass_length = 10)
+    hash = [starting_letter]
+    while hash.length < pass_length do
+      hash << most_common_next_letter(hash.last)
+    end
+
+    return hash.join
+  end
+
+  def common_pronouncable_password(starting_letter, pass_length = 10, sample_limit = 2)
+    hash = [starting_letter]
+    while hash.length < pass_length do
+      hash << common_next_letter(hash.last, sample_limit)
+    end
+    return hash.join
   end
 
   private
