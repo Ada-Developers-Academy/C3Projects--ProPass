@@ -10,17 +10,14 @@ class PronounceablePassword
   end
 
   def read_probabilities
-    # need to find the first letter match
-    # then sort by probability number, descending order
-    # binding.pry
     @probabilities = CSV.read(@probability_corpus, {headers: true})
+
     @dictionary = {}
-    # want dictionary = [{"letter_pair": count}]
+
     @probabilities.each do |row|
-      @dictionary[row[0]] = row[1]
+      @dictionary[row[0]] = row[1].to_i
     end
-    # binding.pry
-    @dictionary.sort_by { |key, value| element.values }.reverse
+    @dictionary.sort_by { |key, value| value }.reverse!
     print @dictionary
 
   end
@@ -30,6 +27,14 @@ class PronounceablePassword
     # by likelyhood in a descending order
     # @combos.sort_by(values desc)
     # @sorted.select { |hash| hash.keys.  }
+    # @dictionary = {"aa" : 1, "ba": 2}
+    sorted = @dictionary.select do |k, v|
+      k.chars.first
+    end
+
+    @sorted
+
+
   end
 
   def most_common_next_letter(letter)
