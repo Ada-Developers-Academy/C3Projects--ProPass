@@ -29,12 +29,26 @@ class PronounceablePassword
     next_letters = @letter_probabilities.find_all do |letter_hash|
       letter_hash.keys[0][0] == letter
     end
-    
+
     return next_letters
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter
+
+    # possible_letters is an array of individual hashes
+    possible_letters = possible_next_letters(letter)
+
+    # this will return the hash with the most probable next letter
+    most_probable_hash = possible_letters.max_by do |hash|
+      # the first is here to get the value out of the array (will always
+      # only be one value in the array)
+      hash.values.first
+    end
+
+    # this will get the next letter out of the hash
+    next_letter = most_probable_hash.keys.first[1]
+    return next_letter
   end
 
   def common_next_letter(letter, sample_limit = 2)
