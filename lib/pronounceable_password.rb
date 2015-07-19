@@ -42,14 +42,7 @@ class PronounceablePassword
 
     rows = read_probabilities # {"aa"=>1, "ba"=>2, "ca"=>3, "da"=>4}
     possibilities_from_letter = rows.select { |key| key[0] == letter }
-    letters_sorted_by_possibility = []
-    possibilities_from_letter.each do |value, key|
-      hash = {}
-      hash[value] = key
-      letters_sorted_by_possibility << hash
-    end
-
-    return letters_sorted_by_possibility
+    complicate_array_with_multiple_hashes(possibilities_from_letter)
     # returns ex. [{"za"=>26}, {"zb"=>10}]
   end
 
@@ -108,7 +101,17 @@ class PronounceablePassword
       end
       hash # returns hash value for the next iteration
     end
-  end
   # returns a hash with all the values inside it
   # instead of an array with individual hashes
+  end
+
+  def complicate_array_with_multiple_hashes(simple_hash)
+    letters_sorted_by_possibility = []
+    simple_hash.each do |value, key|
+      hash = {}
+      hash[value] = key
+      letters_sorted_by_possibility << hash
+    end
+    return letters_sorted_by_possibility
+  end
 end
