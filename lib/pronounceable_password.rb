@@ -73,7 +73,7 @@ class PronounceablePassword
     ### ANOTHER POSSIBLE WAY:
     count = 0
     possibilities = possible_next_letters(letter).reduce([]) do |array, pair|
-      break if count >= sample_limit
+      break array if count >= sample_limit
       pair.each_key do |key|
         array << key[1]
       end
