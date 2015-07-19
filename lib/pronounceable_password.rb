@@ -28,19 +28,46 @@ class PronounceablePassword
       c.start_with?(letter)
     end
 
-
     sorted = return_hash.sort_by { |c| c[1] }.reverse!
 
-    sorted_hash = sorted.map { |array| {array[0] => array[1]} }
-    return sorted_hash
+    @sorted_hash = sorted.map { |array| {array[0] => array[1]} }
+    return @sorted_hash
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter
+    #use sorted_hash to pull out next most common letter and return that letter
+    letter_pair = possible_next_letters(letter).first.keys #returns ["an"]
+
+    letter_string = letter_pair.first #returns "an"
+
+    letter_array= letter_string.split(//)#returns array of letters
+
+    second_letter = letter_array[1]
+
+    return second_letter
   end
+
+
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
+    # return top n tuples
+
+    top_tuples = possible_next_letters(letter)[0..(sample_limit - 1)]
+
+    letter_pairs = top_tuples.map { |hash| hash.keys.first }
+
+    second_letter_array = letter_pairs.map { |pair| pair[-1]}
+
+    return second_letter_array.sample
   end
 end
+
+
+
+
+
+
+
