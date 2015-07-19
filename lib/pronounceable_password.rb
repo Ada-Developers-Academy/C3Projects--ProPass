@@ -29,6 +29,13 @@ class PronounceablePassword
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order.
+
+    rows = read_probabilities
+    possibilities_from_letter = rows.select { |row| row.first[0][0] == letter }
+    letters_sorted_by_possibility =
+      possibilities_from_letter.sort_by { |row| row.first[1].to_i }.reverse
+
+    return letters_sorted_by_possibility
   end
 
   def most_common_next_letter(letter)
