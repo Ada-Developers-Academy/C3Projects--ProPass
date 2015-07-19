@@ -4,17 +4,16 @@ require 'pry'
 class PronounceablePassword
   attr_accessor :probs
 
-
-  def initialize(probability_corpus)
-    # probability corpus is the file location of the CSV with the
+  def initialize(odds_collection)
+    # odds_collection is the file location of the CSV with the
     # pre-calculated letter probability pairs
-    @probability_corpus = probability_corpus
+    @odds_collection = odds_collection
     @probs = {}
   end
 
   def read_probabilities
 
-    mouth_sounds = CSV.read(@probability_corpus, :headers => true)
+    mouth_sounds = CSV.read(@odds_collection, :headers => true)
 
     hash_fulla_sounds_and_nums = {}
 
@@ -71,11 +70,8 @@ class PronounceablePassword
       index += 1
     end
 
-    # ___ DEBUGGING CHECKS ___
-    # puts "most common sounds is #{most_common_sounds}"
-    # puts "index is #{index}"
-    # puts "common_letters is #{common_letters}"
     rando_letter = common_letters.sample
+    # randomly selects a letter from the array
     return rando_letter
 
     # Randomly select a common letter within a range defined by
