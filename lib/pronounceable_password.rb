@@ -24,7 +24,9 @@ class PronounceablePassword
     # "rows" now is an array with hashes
     # ex. [{"'h"=>"2"}, {"ho"=>"2307"}, {"oo"=>"1310"}, {"od"=>"1219"}]
     # return rows
+
     return combine_array_into_single_hash(rows)
+    # returns ex. {"aa"=>1, "ba"=>2, "ca"=>3, "da"=>4}
   end
 
   def possible_next_letters(letter)
@@ -94,4 +96,6 @@ class PronounceablePassword
       hash # returns hash value for the next iteration
     end
   end
+  # returns a hash with all the values inside it
+  # instead of an array with individual hashes
 end
