@@ -17,22 +17,27 @@ class PronounceablePassword
     @probabilities.each do |row|
       @dictionary[row[0]] = row[1].to_i
     end
-    @dictionary.sort_by { |key, value| value }.reverse!
     print @dictionary
+    sort
+  end
 
+  def sort
+    @sorted = @dictionary.sort_by { |key, value| value }.reverse!
   end
 
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
-    # @combos.sort_by(values desc)
-    # @sorted.select { |hash| hash.keys.  }
-    # @dictionary = {"aa" : 1, "ba": 2}
-    sorted = @dictionary.select do |k, v|
-      k.chars.first
+
+    possibilites = []
+
+    @sorted.each do |pair|
+      possibilites.push(pair) if pair[0].chars.first == letter
+      binding.pry
     end
 
-    @sorted
+    possibilities
+    binding.pry
 
 
   end
