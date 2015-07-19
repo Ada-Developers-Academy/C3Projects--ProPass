@@ -30,21 +30,20 @@ class PronounceablePassword
       letter_hash.keys[0][0] == letter
     end
 
+    # puts array in order of descending values
+    next_letters.sort_by! { |hash| hash.values.first }.reverse!
+
     return next_letters
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter
-
     # possible_letters is an array of individual hashes
     possible_letters = possible_next_letters(letter)
 
     # this will return the hash with the most probable next letter
-    most_probable_hash = possible_letters.max_by do |hash|
-      # the first is here to get the value out of the array (will always
-      # only be one value in the array)
-      hash.values.first
-    end
+    # index 0 because possible_letters is already sorted by value
+    most_probable_hash = possible_letters[0]
 
     # this will get the next letter out of the hash
     next_letter = most_probable_hash.keys.first[1]
