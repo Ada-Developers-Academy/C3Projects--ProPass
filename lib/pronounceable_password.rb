@@ -14,32 +14,37 @@ class PronounceablePassword
     # can be used to identify the most probably next letter
     hash = {}
     CSV.foreach(@probability_corpus, headers: true) do |row|
-      hash[row[0]]= row[1].to_i
+      hash[row[0]] = row[1].to_i
     end
-    return hash
+    @hash = hash
   end
 
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
 
-    probability_hash = self.read_probabilities
-    array = probability_hash.select {|k,v| letter == k[0]}.to_a
-    array.sort_by!{|answer_pair| answer_pair[1]}.reverse!
+    filtered_hash = @hash.select {|k,v| letter == k[0]}
+    # Create a new array, then fill it with one-element hashes
+    array = []
+    filtered_hash.each do |k,v|
+      array.push({k => v})
+    end
+    # Sort in decreasing order by the value in each one-element hash
+    array.sort_by!{|answer_pair| answer_pair.values[0]}.reverse!
     return array
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter
     sorted_array = self.possible_next_letters(letter)
-    return sorted_array[0][0][1]
+    return sorted_array[0].keys[0][1]
   end
 
   def common_next_letter(letter, sample_limit=2)
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
-    choices = self.possible_next_letters(letter).first(sample_limit).sample
-    letter = choices[0][1]
+    choice = self.possible_next_letters(letter).first(sample_limit).sample
+    letter = choice.keys[0][1]
     return letter
   end
 end
