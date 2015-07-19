@@ -2,7 +2,7 @@ require 'csv'
 require "pry"
 
 class PronounceablePassword
-  attr_accessor :dictionary, :sorted
+  attr_accessor :dictionary
 
   def initialize(probability_corpus)
     # probability corpus is the file location of the CSV with the
