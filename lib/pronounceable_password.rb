@@ -25,22 +25,23 @@ class PronounceablePassword
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
-    # sort
     @sorted = @dictionary.sort_by { |key, value| value }.reverse!
+
+    @possible = []
     @sorted.each do |pair| # ["za", 26]
       if pair[0].chars.first == letter
-    possible = []
-        possible.push(pair)
+        @possible.push(pair)
       end
     end
-    puts "possible:"
-    print possible
-    possible
+
+    @possible
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter
-    possible_next_letters(letter).first
+    letter = possible_next_letters(letter).first
+
+    letter[0].chars.last
   end
 
   def common_next_letter(letter, sample_limit = 2)
