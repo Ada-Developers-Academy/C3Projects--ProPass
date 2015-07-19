@@ -3,8 +3,9 @@ require 'csv'
 class PronounceablePassword
 
   def initialize(probability_corpus)
-    # probability corpus is the file location of the CSV with the
-    # pre-calculated letter probability pairs
+    # Probability corpus is the file location of the CSV with the
+    # pre-calculated letter probability pairs.
+
     @probability_corpus = probability_corpus
   end
 
@@ -12,106 +13,67 @@ class PronounceablePassword
     # Should consume the provided CSV file into a structure that
     # can be used to identify the most probably next letter.
 
-    rows = []
-
+    hashing_it_up = {}
     csv_object = CSV.read(@probability_corpus)
     csv_object.shift # to move past the header of the CSV file
     csv_object.each do |row|
-      the_row = { row[0] => row[1].to_i }
-      rows << the_row
+      hashing_it_up[row[0]] = row[1].to_i
     end
 
-    # "rows" now is an array with hashes
-    # ex. [{"'h"=>"2"}, {"ho"=>"2307"}, {"oo"=>"1310"}, {"od"=>"1219"}]
-    ### OLD CODE:
-    # return rows
-
-    return combine_array_into_single_hash(rows)
-    # returns ex. {"aa"=>1, "ba"=>2, "ca"=>3, "da"=>4}
+    return hashing_it_up
+    # returns ex. {"aa"=>4, "ab"=>100, "az"=>2, "ba"=>4}
   end
 
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order.
 
-    ### OLD CODE:
-    # rows = read_probabilities
-    # possibilities_from_letter = rows.select { |row| row.first[0][0] == letter }
-    # letters_sorted_by_possibility =
-    #   possibilities_from_letter.sort_by { |row| row.first[1] }.reverse
+    all_letter_combos = read_probabilities # {"aa"=>4, "ab"=>100, "az"=>2, "ba"=>4}
+    select_letter_combos = all_letter_combos.select { |key| key[0] == letter }
+    sorted_select_letter_combos =
+      select_letter_combos.sort_by { |key, value| value }
+        # returns ex. [["az", 2], ["aa", 4], ["ab", 100]]
+    sorted_select_letter_combos.reverse!
+      # returns ex. [["ab", 100], ["aa", 4], ["az", 2]]
 
-    rows = read_probabilities # {"aa"=>1, "ba"=>2, "ca"=>3, "da"=>4}
-    possibilities_from_letter = rows.select { |key| key[0] == letter }
-    complicate_array_with_multiple_hashes(possibilities_from_letter)
-    # returns ex. [{"za"=>26}, {"zb"=>10}]
+    return reformat_array_of_arrays_to_hash(sorted_select_letter_combos)
+    # returns {"ab"=>100, "aa"=>4, "az"=>2}
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter.
 
-    possible_next_letters(letter).first.keys.first[1]
-      # first in array, keys in hash, first (and only) value, and second character
-    # returns ex. 'e'
+    return possible_next_letters(letter).keys.first[1]
+      # lists keys in hash, takes the second character of the first key
+    # returns ex. 'b'
   end
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring.
 
-    ### ONE POSSIBLE WAY:
-    # new_hash = combine_array_into_single_hash(possible_next_letters(letter))
-    #   # results in: ex. {"za"=>26, "zb"=>10}
-    #
-    # count = 0
-    # possible_letters = []
-    # new_hash.each_value do |value|
-    #   break if count >= sample_limit
-    #   possible_letters << value
-    #   count += 1
-    # end
-
-    ### ANOTHER POSSIBLE WAY:
     count = 0
-    possibilities = possible_next_letters(letter).reduce([]) do |array, pair|
-      break array if count >= sample_limit
-      pair.each_key do |key|
-        array << key[1]
-      end
+    possible_letters = []
+    possible_next_letters(letter).each_key do |key|
+      break possible_letters if count >= sample_limit
+      possible_letters << key[1]
       count += 1
-      array
     end
+    # when break, returns ex. ['b', 'a']
 
-    possibilities.sample # randomly selects an element!
-
-    # returns ex. ['a','b']
+    return possible_letters.sample # randomly selects an element!
+    # return 'a'
   end
 
   private
 
-  # DIDN'T END UP USING, BUT WAS GOOD REFERENCE FOR #common_next_letter METHOD
-  def combine_array_into_single_hash(array)
-    # {} is the initial value
-    # hash is the hash that will grow (be added to) every iteration
-    # pairs is the {"ab" => 2}
-    array.reduce({}) do |hash, pair|
-      pair.each do |key, value|
-        # this will always only run once, since there is only one pair in each mini-hash
-        # adds the value to the key for the empty hash (or growing hash)
-        hash[key] = value
-      end
-      hash # returns hash value for the next iteration
+  def reformat_array_of_arrays_to_hash(array)
+    hashing_it_up = {}
+    array.each do |pair|
+      hashing_it_up[pair[0]] = pair[1]
     end
-  # returns a hash with all the values inside it
-  # instead of an array with individual hashes
+    return hashing_it_up
+    # returns ex. {"az"=>2, "aa"=>4, "ab"=>100}
   end
 
-  def complicate_array_with_multiple_hashes(simple_hash)
-    letters_sorted_by_possibility = []
-    simple_hash.each do |value, key|
-      hash = {}
-      hash[value] = key
-      letters_sorted_by_possibility << hash
-    end
-    return letters_sorted_by_possibility
-  end
 end
