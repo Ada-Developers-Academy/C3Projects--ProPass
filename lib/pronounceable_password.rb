@@ -26,8 +26,11 @@ class PronounceablePassword
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
-
-
+    next_letters = @letter_probabilities.find_all do |letter_hash|
+      letter_hash.keys[0][0] == letter
+    end
+    
+    return next_letters
   end
 
   def most_common_next_letter(letter)
