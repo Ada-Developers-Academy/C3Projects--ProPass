@@ -16,8 +16,9 @@ describe 'Pronounceable Passwords' do
     expect(probabilities['za']).to equal 26
   end
 
+# changed this test to match my output of arrays of arrays, and not an array of hashes
   it 'will pick the next most common letters' do
-    expect(@pronounce.possible_next_letters('z')).to eql [{"za"=>26}, {"zb"=>10}]
+    expect(@pronounce.possible_next_letters('z')).to eql [["za", 26], ["zb", 10]]
   end
 
   it 'will pick the next best letter' do
