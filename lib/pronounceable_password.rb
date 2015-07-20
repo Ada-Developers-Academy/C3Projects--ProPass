@@ -40,7 +40,13 @@ class PronounceablePassword
 
   def most_common_next_letter(letter)
     # The most probable next letter
-    mcnl = self.possible_next_letters
+   common_letter_hash = self.read_probabilities
+   next_letter_likely_hash = common_letter_hash.select{|letter_pair,count| letter_pair.chars.first ==letter }
+   next_letter_likely =next_letter_likely_hash.to_s.split""
+   answer = next_letter_likely[3]
+
+
+  
   end
 
   def common_next_letter(letter, sample_limit = 2)
