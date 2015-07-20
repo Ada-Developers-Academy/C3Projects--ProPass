@@ -1,6 +1,7 @@
 require_relative './spec_helper'
 require_relative './custom_expectations'
 require_relative '../lib/pronounceable_password'
+require "pry"
 
 describe 'Pronounceable Passwords' do
 
@@ -17,6 +18,7 @@ describe 'Pronounceable Passwords' do
   end
 
   it 'will pick the next most common letters' do
+
     expect(@pronounce.possible_next_letters('z')).to eql [{"za"=>26}, {"zb"=>10}]
   end
 
@@ -27,4 +29,5 @@ describe 'Pronounceable Passwords' do
   it 'will pick the next best letter from a subset of the most common options' do
     expect(@pronounce.common_next_letter('z')).to be_one_of(['a','b'])
   end
+
 end
