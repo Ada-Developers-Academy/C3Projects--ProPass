@@ -20,7 +20,6 @@ class PronounceablePassword
       else
         @database[letter_pair.first] = [ { letter_pair.last => row[:count].to_i } ]
       end
-      # print @database
     end
   end
 
@@ -28,14 +27,12 @@ class PronounceablePassword
     @database.each do |k, v|
       v.sort_by! { |hash| hash.values }.reverse!
     end
-    # print @database
   end
 
   def remove_counts
     @database.each do |k, v|
       @database[k] = v.flat_map{ |hash| hash.keys }
     end
-    # print @database
   end
 
   def possible_next_letters(letter)
