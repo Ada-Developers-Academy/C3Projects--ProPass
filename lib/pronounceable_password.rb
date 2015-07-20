@@ -1,9 +1,9 @@
 require 'csv'
 
-class PronounceablePassword
+class PronounceablePasswords
 
   def initialize(probability_corpus)
-    # probability corpus is the file location of the CSV with the 
+    # probability corpus is the file location of the CSV with the
     # pre-calculated letter probability pairs
     @probability_corpus = probability_corpus
   end
@@ -24,6 +24,6 @@ class PronounceablePassword
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
-    # the sample limit as the lower bounds of a substring 
+    # the sample limit as the lower bounds of a substring
   end
 end
