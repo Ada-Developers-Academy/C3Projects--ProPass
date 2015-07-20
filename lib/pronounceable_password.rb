@@ -9,6 +9,8 @@ class PronounceablePassword
     read_probabilities
     sort_database
     remove_counts
+
+    @database
   end
 
   def read_probabilities
@@ -21,18 +23,24 @@ class PronounceablePassword
         @database[letter_pair.first] = [ { letter_pair.last => row[:count].to_i } ]
       end
     end
+
+    @database
   end
 
   def sort_database
     @database.each do |k, v|
       v.sort_by! { |hash| hash.values }.reverse!
     end
+
+    @database
   end
 
   def remove_counts
     @database.each do |k, v|
       @database[k] = v.flat_map{ |hash| hash.keys }
     end
+
+    @database
   end
 
   def possible_next_letters(letter)
