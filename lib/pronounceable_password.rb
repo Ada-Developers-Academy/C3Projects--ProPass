@@ -26,7 +26,7 @@ class PronounceablePassword
     # by likelyhood in a descending order
 
     #returns one hash with key values of all matching letter pairs
-    return_hash = @hash.select {|c| c.start_with?(letter) }
+    return_hash = @hash.select { |c| c.start_with?(letter) }
 
     # returns array of arrays of descending order
     sorted = return_hash.sort_by { |c| c[1] }.reverse!
@@ -34,7 +34,7 @@ class PronounceablePassword
     # converts array of arrays into array of tuples
     sorted_hash = sorted.map { |array| {array[0] => array[1]} }
     return sorted_hash
-  end
+  ends
 
 
   def most_common_next_letter(letter)
@@ -66,7 +66,7 @@ class PronounceablePassword
     letter_pairs = top_tuples.map { |hash| hash.keys.first }
 
     # returns array of second letters
-    second_letter_array = letter_pairs.map { |pair| pair[-1]}
+    second_letter_array = letter_pairs.map { |pair| pair[-1] }
 
     return second_letter_array.sample
   end
