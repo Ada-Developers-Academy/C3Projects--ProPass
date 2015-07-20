@@ -22,4 +22,15 @@ end
 print "Random(ish) password: "
 puts common_pronouncable_password.join
 
+# without a while loop
+  # NOTE: I thought about using recursion,
+  # but that seemed unnecessarily complicated,
+  # and not like this was a good use for it?
+previous_letter = starting_letter
+pro_pass = starting_letter
+(pass_length - 1).times do
+  previous_letter = pronounce.common_next_letter(previous_letter)
+  pro_pass += previous_letter
 end
+print "Random(ish) password without a while loop: "
+puts pro_pass
