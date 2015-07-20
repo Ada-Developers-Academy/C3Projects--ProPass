@@ -15,7 +15,7 @@ class PronounceablePassword
 
     probabilities = CSV.foreach(@probability_corpus,{:headers => true}) do |row|
 
-      probability[row["letter pair"]] = row["count"].to_i
+      probability[row[0]] = row[1].to_i
     end  
 
     return probability 
@@ -51,6 +51,7 @@ class PronounceablePassword
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
-    # the sample limit as the lower bounds of a substring 
+    # the sample limit as the lower bounds of a substring
+    array = self.most_common_next_letter(letter)  
   end
 end
