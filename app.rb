@@ -1,4 +1,5 @@
 require_relative './lib/pronounceable_password'
+require 'benchmark'
 pronounce = PronounceablePassword.new './data/probability.csv'
 pronounce.read_probabilities
 pass_length = 10
@@ -17,3 +18,9 @@ while common_pronouncable_password.length < pass_length do
   common_pronouncable_password << pronounce.common_next_letter(common_pronouncable_password.last)
 end
 puts common_pronouncable_password.join
+
+  time = Benchmark.realtime do
+    pronounce.possible_next_letters("t")
+  end
+
+puts "it took #{time * 1000} ms"
