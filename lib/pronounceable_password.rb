@@ -30,8 +30,11 @@ class PronounceablePassword
   def possible_next_letters(letter)
 
     all_matches = @odds.select {|key, value| key[0].include?(letter)}
+    # locates all possible matches
     sorted_array = all_matches.sort_by {|sound, probbles| probbles }.reverse
+    # sorts descending
     tuple_version = sorted_array.collect {|sound, probbles| {sound => probbles}}
+    # converts giant hash into tuples
     return tuple_version
 
     # Should return an array of possible next letters sorted
@@ -41,8 +44,11 @@ class PronounceablePassword
   def most_common_next_letter(letter)
 
     tuple_version = possible_next_letters(letter)
+    #[{sound => num},{sound => num}]
     most_common_sound = tuple_version.first.keys
+    # first sound
     second_letter = most_common_sound[0][1]
+    # snag the second letter
     return second_letter
     # The most probable next letter
   end
@@ -66,7 +72,7 @@ class PronounceablePassword
       just_the_second_letter = a_sound_string[1]
       # "y"
       common_letters.push(just_the_second_letter)
-
+      # advance the counter
       index += 1
     end
 
