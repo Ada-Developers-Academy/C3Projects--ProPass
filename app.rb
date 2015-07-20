@@ -17,3 +17,10 @@ while common_pronouncable_password.length < pass_length do
   common_pronouncable_password << pronounce.common_next_letter(common_pronouncable_password.last)
 end
 puts common_pronouncable_password.join
+
+# without a while loop
+common_pronouncable_password = [starting_letter]
+(pass_length - 1).times do
+  common_pronouncable_password << pronounce.common_next_letter(common_pronouncable_password.last)
+end
+puts common_pronouncable_password.join
