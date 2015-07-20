@@ -18,8 +18,7 @@ class PronounceablePassword
 
   # returns map of letters to letter pair / score tuples starting with the input letter
   def map_next_letters
-    corpus = read_probabilities
-    corpus.group_by do |k, v|
+    read_probabilities.group_by do |k, v|
       k.chars.first
     end
   end
