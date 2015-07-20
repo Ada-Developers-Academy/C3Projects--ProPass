@@ -17,7 +17,7 @@ describe 'Pronounceable Passwords' do
   end
 
   it 'will pick the next most common letters' do
-    expect(@pronounce.possible_next_letters('z')).to eql [["za", 26], ["zb", 10]]
+    expect(@pronounce.possible_next_letters('z')).to eql [{"za" => 26}, {"zb" => 10}]
   end
 
   it 'will pick the next best letter' do

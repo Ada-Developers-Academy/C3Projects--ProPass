@@ -29,11 +29,23 @@ class PronounceablePassword
     all_matches = @probabilities.select { |key| key[0].include?(letter) }
 
     sorted_matches = all_matches.sort_by { |key, value| value }.reverse
+
+    #sorted_matches is now [['ab', 3], ['ac' 1]]
+    # need to turn this back into hashes
+    final_matches = [ ]
+
+    sorted_matches.each do |pair|
+      hash = { }
+      hash["#{pair.first}"] = pair.last
+      final_matches.push(hash)
+    end
+
+    return final_matches
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter
-    
+
   end
 
   def common_next_letter(letter, sample_limit = 2)
