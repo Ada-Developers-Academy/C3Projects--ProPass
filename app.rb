@@ -34,4 +34,4 @@ puts common_pronouncable_password.join
 
 puts "While 1 Time elapsed #{(while1 - beginning_time1)*1000} milliseconds"
 puts "While 2 Time elapsed #{(while2 - beginning_time2)*1000} milliseconds"
-puts "10 Times elapsed #{(times - beginning_time3)*1000} milliseconds"
+puts "10 Times elapsed #{(times - beginning_time3)*1000} millisecond"
