@@ -1,6 +1,6 @@
 require 'csv'
 
-class PronounceablePasswords
+class PronounceablePassword
 
   def initialize(probability_corpus)
     # probability corpus is the file location of the CSV with the
