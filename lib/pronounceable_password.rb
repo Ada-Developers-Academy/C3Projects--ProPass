@@ -5,6 +5,10 @@ class PronounceablePassword
     @csv_location = csv_location
   end
 
+  def prep_database
+    read_probabilities
+    sort_database
+    remove_counts
   end
 
   def read_probabilities
@@ -19,9 +23,6 @@ class PronounceablePassword
       end
       # print @database
     end
-
-    sort_database
-    remove_counts
   end
 
   def sort_database
