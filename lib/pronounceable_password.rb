@@ -14,12 +14,11 @@ class PronounceablePassword
   def read_probabilities
     @database = Hash.new(false)
     CSV.foreach(@csv_location, headers: true, header_converters: :symbol) do |row|
-      if @database[row[:letter_pair].chars.first]
-        # puts "#{ row[:letter_pair].chars.first } exists as a key."
-        @database[row[:letter_pair].chars.first] << { row[:letter_pair].chars.last => row[:count].to_i }
+      letter_pair = row[:letter_pair].chars
+      if @database[letter_pair.first]
+        @database[letter_pair.first] << { letter_pair.last => row[:count].to_i }
       else
-        # puts "#{ row[:letter_pair].chars.first } is NOT a key."
-        @database[row[:letter_pair].chars.first] = [ { row[:letter_pair].chars.last => row[:count].to_i } ]
+        @database[letter_pair.first] = [ { letter_pair.last => row[:count].to_i } ]
       end
       # print @database
     end
