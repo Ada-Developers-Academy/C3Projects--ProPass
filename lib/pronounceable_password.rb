@@ -36,10 +36,20 @@ class PronounceablePassword
   end
 
   def most_common_next_letter(letter)
+    @array = possible_next_letters(letter).sort_by do |key, value|
+      value
+    end
+    @array.last[0].split(//).last
     # The most probable next letter
   end
 
   def common_next_letter(letter, sample_limit = 2)
+    @array = possible_next_letters(letter).sort_by do |key, value|
+      value
+    end
+    @highest = @array.pop(sample_limit)
+    @letter = @highest.sample
+    @letter[0].split(//).last
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
   end
