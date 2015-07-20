@@ -17,17 +17,14 @@ class PronounceablePassword
     letters = {}
     CSV.foreach(@probability_corpus, headers: true) do |line|
       letters.merge!({line[0] => line[1].to_i})
-
     end
 
     #Array of tupils
     # letters = []
     # CSV.foreach(@probability_corpus, headers: true) do |line|
-
     #   letters.push({line[0] => line[1].to_i})
-
-
     # end
+
     letters
   end
 
@@ -45,10 +42,10 @@ class PronounceablePassword
     #Array of tupils
     # hash = read_probabilities.select do |pair| 
     #   pair.keys[0][0] == letter
-
     # end
 
     # hash.sort_by {|pair| pair.values}.reverse
+    
   end
 
 
@@ -68,7 +65,7 @@ class PronounceablePassword
 
 
     #Hash
-    possible_next_letters(letter).to_h.keys.sample(sample_limit)
+    possible_next_letters(letter).to_h.keys.sample(sample_limit)[0][1]
 
     #Array of tupils
     # pairs = possible_next_letters(letter).sample(sample_limit)
