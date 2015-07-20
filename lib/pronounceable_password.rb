@@ -31,10 +31,7 @@ class PronounceablePassword
     hash_next_letters = all_answers.select{|letter_pair, count| letter_pair.chars.first == letter}
     array_next_letters = []
     array_next_letters = hash_next_letters.map{|letter_pair,count| {letter_pair => count} }
-    # another_hash_next_letters = {}
-    # another_hash_next_letters = hash_next_letters.split(",")
-    # array_next_letters = []
-    # array_next_letters = hash_next_letters.to_a
+
 
   end
 
