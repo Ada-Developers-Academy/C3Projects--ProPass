@@ -11,9 +11,8 @@ describe 'Pronounceable Passwords' do
 
   it 'will load the probability corpus csv' do
     probabilities = @pronounce.read_probabilities
-    expect(probabilities['aa']).to equal 1
-    expect(probabilities['kb']).to equal nil
-    expect(probabilities['za']).to equal 26
+    expect(probabilities.first['aa']).to equal 1
+    expect(probabilities.last['zb']).to equal 10
   end
 
   it 'will pick the next most common letters' do
