@@ -22,6 +22,12 @@ class PronounceablePassword
     password
   end
 
+  def recursive_build_password_from(password, password_length = 10)    
+    return password if password_length == 1
+    
+    recursive_build_password_from(password + common_next_letter(password[-1]), password_length - 1)
+  end
+
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
