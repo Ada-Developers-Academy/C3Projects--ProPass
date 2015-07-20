@@ -1,5 +1,6 @@
 require 'csv'
 require 'pry'
+require 'benchmark'
 
 class PronounceablePassword
 
