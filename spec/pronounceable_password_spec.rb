@@ -9,11 +9,21 @@ describe 'Pronounceable Passwords' do
     @pronounce.read_probabilities
   end
 
-  it 'will load the probability corpus csv' do
-    probabilities = @pronounce.read_probabilities
-    pairs = {'aa' => 1, 'kb' => nil, 'za' => 26}
-    pairs.each do |key, value|
-      expect(probabilities[key]).to eq value
+  context 'loading the probability corpus csv' do
+    let(:probabilities) { @pronounce.read_probabilities }
+    it 'will return the correct values' do
+      pairs = { 'aa' => 1, 'za' => 26, 'ha' => 8 }
+
+      pairs.each do |key, value|
+        pair = probabilities.find { |item| item.keys.first == key }
+        expect(pair[key]).to eq value
+      end
+    end
+
+    it 'will return nil if letter pair is not in the csv' do
+      nil_pair = {'kb' => nil}
+      pair = probabilities.find { |item| item.keys.first == nil_pair['kb'] }
+      expect(pair).to eq nil
     end
   end
 

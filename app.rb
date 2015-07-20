@@ -34,7 +34,7 @@ end
 puts common_pronouncable_password.join
 
 
-# Testing efficiency. Mine win!
+# Testing efficiency
 time1 = Benchmark.realtime do
   most_common_pronouncable_password = [starting_letter]
   while most_common_pronouncable_password.length < pass_length do
@@ -84,6 +84,6 @@ time4 = Benchmark.realtime do
 end
 
 puts """
-Time elapsed for common pronounceable password with while loop:
+Time elapsed for common pronounceable password with .times:
 #{ time4 * 1000 } milliseconds.
 """
