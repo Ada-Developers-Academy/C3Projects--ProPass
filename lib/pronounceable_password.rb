@@ -31,25 +31,32 @@ class PronounceablePassword
     sorted_matches = all_matches.sort_by { |key, value| value }.reverse
 
     #sorted_matches is now [['ab', 3], ['ac' 1]]
-    # need to turn this back into hashes
-    final_matches = [ ]
+    # need to turn this back into array of hashes
+    @final_matches = [ ]
 
     sorted_matches.each do |pair|
       hash = { }
       hash["#{pair.first}"] = pair.last
-      final_matches.push(hash)
+      @final_matches.push(hash)
     end
 
-    return final_matches
+    return @final_matches
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter
+    return possible_next_letters(letter).first.first.first[1]
 
   end
 
   def common_next_letter(letter, sample_limit = 2)
     # Randomly select a common letter within a range defined by
     # the sample limit as the lower bounds of a substring
+    letters = []
+
+    letters.push(possible_next_letters(letter).first.first.first[1])
+    letters.push(possible_next_letters(letter)[1].first.first[1])
+
+    return letters.sample
   end
 end
