@@ -56,10 +56,10 @@ class PronounceablePassword
     #   "b" => { "b" => 2, "c" => 5, "a" => 33 }
     # }
     CSV.open(probability_corpus, 'r', { headers: true }).each do |line|
-      first_char, last_pair = line.fetch("letter pair").chars
+      first_char, last_char = line.fetch("letter pair").chars
       letter_hash[first_char] ||= {}
-      letter_hash[first_char][last_pair] ||= 0
-      letter_hash[first_char][last_pair] += line.fetch("count", 0).to_i
+      letter_hash[first_char][last_char] ||= 0
+      letter_hash[first_char][last_char] += line.fetch("count", 0).to_i
     end
   end
 
