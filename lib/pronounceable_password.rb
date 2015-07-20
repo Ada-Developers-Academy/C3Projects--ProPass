@@ -12,22 +12,28 @@ class PronounceablePassword
   def read_probabilities
     # Should consume the provided CSV file into a structure that
     # can be used to identify the most probably next letter
-    probabilities = { }
+    @probabilities = { }
 
     CSV.foreach(@probability_corpus, headers: true) do |row|
-      probabilities["#{row[0]}"] = row[1].to_i
+      @probabilities["#{row[0]}"] = row[1].to_i
     end
 
-    return probabilities
+    return @probabilities
   end
 
   def possible_next_letters(letter)
     # Should return an array of possible next letters sorted
     # by likelyhood in a descending order
+    possible_next_letters = [ ]
+
+    all_matches = @probabilities.select { |key| key[0].include?(letter) }
+
+    sorted_matches = all_matches.sort_by { |key, value| value }.reverse
   end
 
   def most_common_next_letter(letter)
     # The most probable next letter
+    
   end
 
   def common_next_letter(letter, sample_limit = 2)
