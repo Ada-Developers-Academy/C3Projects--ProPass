@@ -3,28 +3,83 @@ require_relative './custom_expectations'
 require_relative '../lib/pronounceable_password'
 
 describe 'Pronounceable Passwords' do
+  let(:propass) { PronounceablePassword.new './spec/fixtures/tiny_corpus.csv' }
 
-  before :each do
-    @pronounce = PronounceablePassword.new './spec/fixtures/tiny_corpus.csv'
-    @pronounce.read_probabilities
+  describe "database prep" do
+    describe "#read_probabilities" do
+      let(:database) { propass.read_probabilities }
+
+      it 'loads the probability corpus csv' do
+        expect(database['a']).to eq [{"a"=>1}]
+        expect(database['k']).to eq [{"a"=>11}]
+      end
+
+      it "does not sort the database" do
+        expect(database['z']).to eq [{"b"=>10}, {"a"=>26}]
+      end
+    end
+
+    describe "#sort_database" do
+      before :each do
+        propass.read_probabilities
+        @database = propass.sort_database
+      end
+
+      it "sorts each letter's array by prevalence" do
+        expect(@database['z']).to eq [{"a"=>26}, {"b"=>10}]
+      end
+    end
+
+    describe "#remove_counts" do
+      before :each do
+        propass.read_probabilities
+        @database = propass.remove_counts
+      end
+
+      it "removes the counts, turning the hash into an array" do
+        expect(@database['a']).to eq ["a"]
+        expect(@database['k']).to eq ["a"]
+        expect(@database['z']).to eq ['b', 'a']
+      end
+    end
+
+    describe "#prep_database" do
+      before :each do
+        @database = propass.prep_database
+      end
+
+      it "reads the database, sorts it, and removes counts" do
+        expect(@database['a']).to eq ["a"]
+        expect(@database['k']).to eq ["a"]
+        expect(@database['z']).to eq ['a', 'b']
+      end
+    end
   end
 
-  it 'will load the probability corpus csv' do
-    probabilities = @pronounce.read_probabilities
-    expect(probabilities['aa']).to equal 1
-    expect(probabilities['kb']).to equal nil
-    expect(probabilities['za']).to equal 26
-  end
+  describe "letter picking" do
+    before :each do
+      propass.prep_database
+    end
 
-  it 'will pick the next most common letters' do
-    expect(@pronounce.possible_next_letters('z')).to eql [{"za"=>26}, {"zb"=>10}]
-  end
+    describe "#possible_next_letters" do
+      it 'picks the next most common letters' do
+        expect(propass.possible_next_letters('z')).to eq ["a", "b"]
+      end
+    end
 
-  it 'will pick the next best letter' do
-    expect(@pronounce.most_common_next_letter('z')).to eql 'a'
-  end
+    describe "#most_common_next_letter" do
+      it 'picks the next best letter' do
+        expect(propass.most_common_next_letter('z')).to eq 'a'
+      end
+    end
 
-  it 'will pick the next best letter from a subset of the most common options' do
-    expect(@pronounce.common_next_letter('z')).to be_one_of(['a','b'])
+    describe "#common_next_letter" do
+      it 'picks the next best letter from a subset of the most common options' do
+        expect(propass.common_next_letter('z')).to be_one_of(['a','b'])
+      end
+    end
   end
 end
+
+
+
