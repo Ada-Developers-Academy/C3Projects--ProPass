@@ -1,4 +1,5 @@
 require_relative './lib/pronounceable_password'
+require 'pry'
 pronounce = PronounceablePassword.new './data/probability.csv'
 pronounce.read_probabilities
 pass_length = 10
